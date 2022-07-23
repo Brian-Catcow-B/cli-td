@@ -29,4 +29,4 @@ $(OBJ)/main.o: $(SRC)/main.c
 	mv main.o $(OBJ)/
 
 clean:
-	rm -rf $(OBJ)/* $(BIN)/*
+	rm -rf $(OBJ)/* $(BIN)/* $(SRC)/*.gch

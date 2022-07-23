@@ -3,6 +3,7 @@
 
 void init_context(context_t *self) {
 	init_board(&self->board);
+	generate_path(&self->board);
 }
 
 void deinit_context(context_t *self) {
