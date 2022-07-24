@@ -2,7 +2,7 @@
 #define BOARD_H
 
 #define BOARD_WIDTH 80
-#define BOARD_HEIGHT 40
+#define BOARD_HEIGHT 30
 
 #include <stddef.h>
 
@@ -42,6 +42,7 @@ void tile_update(tile_t *self);
 
 typedef struct board_t {
 	tile_t tiles[BOARD_HEIGHT][BOARD_WIDTH];
+	board_position_t enemy_start_pos;
 } board_t;
 
 void init_board(board_t *self);

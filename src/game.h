@@ -5,6 +5,7 @@
 
 typedef struct context_t {
 	board_t board;
+	struct vector_t *vec_enemies;
 } context_t;
 
 void init_context(context_t *self);

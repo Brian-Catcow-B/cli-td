@@ -56,6 +56,8 @@ void init_board(board_t *self) {
 			init_tile(&(self->tiles[y][x]), bp);
 		}
 	}
+	self->enemy_start_pos.y = -1;
+	self->enemy_start_pos.x = -1;
 }
 
 void deinit_board(board_t *self) {
@@ -67,19 +69,24 @@ void deinit_board(board_t *self) {
 }
 
 void generate_path(board_t *self) {
+	self->enemy_start_pos.y = 0;
+	self->enemy_start_pos.x = 2;
 	for (size_t y = 0; y < BOARD_HEIGHT - 3; y++) {
 		self->tiles[y][2].type = e_tile_type_path;
 		self->tiles[y][2].path_direction = e_path_direction_down;
+		tile_update(&(self->tiles[y][2]));
 	}
 
 	for (size_t x = 2; x < BOARD_WIDTH - 3; x++) {
-		self->tiles[BOARD_HEIGHT - 2][x].type = e_tile_type_path;
-		self->tiles[BOARD_HEIGHT - 2][x].path_direction = e_path_direction_right;
+		self->tiles[BOARD_HEIGHT - 3][x].type = e_tile_type_path;
+		self->tiles[BOARD_HEIGHT - 3][x].path_direction = e_path_direction_right;
+		tile_update(&(self->tiles[BOARD_HEIGHT - 3][x]));
 	}
 
 	for (size_t y = 0; y < BOARD_HEIGHT - 2; y++) {
-		self->tiles[y][BOARD_WIDTH - 2].type = e_tile_type_path;
-		self->tiles[y][BOARD_WIDTH - 2].path_direction = e_path_direction_up;
+		self->tiles[y][BOARD_WIDTH - 3].type = e_tile_type_path;
+		self->tiles[y][BOARD_WIDTH - 3].path_direction = e_path_direction_up;
+		tile_update(&(self->tiles[y][BOARD_WIDTH - 3]));
 	}
 }
 

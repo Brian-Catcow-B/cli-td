@@ -16,8 +16,12 @@ typedef struct enemy_t {
 	board_t *board;
 } enemy_t;
 
+enemy_t *alloc_init_enemy(e_enemy_type type, board_t *board);
 void init_enemy(enemy_t *self, e_enemy_type type, board_t *board);
+void dealloc_deinit_enemy(enemy_t *self);
 void deinit_enemy(enemy_t *self);
+
+void enemy_set_pos(enemy_t *self, board_position_t new_pos);
 
 #endif // ENEMY_H
 

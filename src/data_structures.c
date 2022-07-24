@@ -1,5 +1,6 @@
 #include "data_structures.h"
 #include <stdlib.h>
+#include "log.h"
 
 #define BASE_VECTOR_ALLOCATED_SIZE 15
 
@@ -15,6 +16,7 @@ vector_t *alloc_init_vector() {
 	new_vec->size = 0;
 	new_vec->allocated_size = BASE_VECTOR_ALLOCATED_SIZE;
 
+	LOG_VA("new_vec pointer: %lx\n", (size_t) new_vec);
 	return new_vec;
 }
 
@@ -24,8 +26,11 @@ void dealloc_deinit_vector(vector_t *self) {
 }
 
 void vector_push_back(vector_t *self, void *elem) {
+	LOG_VA("pushing to back of vector; yay! %lx\n", (size_t) self);
 	if (self->size == self->allocated_size) {
-		self->data = realloc(self->data, self->allocated_size + BASE_VECTOR_ALLOCATED_SIZE);
+		LOG_VA("calling realloc; self->size == self->allocated_size == %lu\n", self->size);
+		LOG_VA("realloc(self->data, %lu);\n", sizeof(void *) * (self->allocated_size + BASE_VECTOR_ALLOCATED_SIZE));
+		self->data = realloc(self->data, sizeof(void *) * (self->allocated_size + BASE_VECTOR_ALLOCATED_SIZE));
 	}
 
 	self->data[self->size] = elem;

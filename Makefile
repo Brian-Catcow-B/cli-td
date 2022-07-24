@@ -7,7 +7,7 @@ SRC = src
 OBJ = objects
 BIN = bin
 
-OBJ_FILES = $(OBJ)/game.o $(OBJ)/board.o $(OBJ)/enemy.o $(OBJ)/data_structures.o
+OBJ_FILES = $(OBJ)/game.o $(OBJ)/board.o $(OBJ)/enemy.o $(OBJ)/data_structures.o $(OBJ)/log.o
 LIBS = -lncurses
 
 all: mkdirs $(PROJECT)
@@ -29,4 +29,4 @@ $(OBJ)/main.o: $(SRC)/main.c
 	mv main.o $(OBJ)/
 
 clean:
-	rm -rf $(OBJ)/* $(BIN)/* $(SRC)/*.gch
+	rm -rf $(OBJ)/* $(BIN)/* $(SRC)/*.gch logs.txt
