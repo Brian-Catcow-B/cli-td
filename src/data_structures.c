@@ -12,7 +12,7 @@ struct vector_t {
 
 vector_t *alloc_init_vector() {
 	vector_t *new_vec = malloc(sizeof(vector_t));
-	new_vec->data = calloc((size_t) NULL, sizeof(void *) * BASE_VECTOR_ALLOCATED_SIZE);
+	new_vec->data = malloc(sizeof(void *) * BASE_VECTOR_ALLOCATED_SIZE);
 	new_vec->size = 0;
 	new_vec->allocated_size = BASE_VECTOR_ALLOCATED_SIZE;
 
@@ -26,7 +26,7 @@ void dealloc_deinit_vector(vector_t *self) {
 }
 
 void vector_push_back(vector_t *self, void *elem) {
-	LOG_VA("pushing to back of vector; yay! %lx\n", (size_t) self);
+	LOG_VA("vector_push_back: %lx\n", (size_t) elem);
 	if (self->size == self->allocated_size) {
 		LOG_VA("calling realloc; self->size == self->allocated_size == %lu\n", self->size);
 		LOG_VA("realloc(self->data, %lu);\n", sizeof(void *) * (self->allocated_size + BASE_VECTOR_ALLOCATED_SIZE));
@@ -46,6 +46,7 @@ void vector_insert_index(vector_t *self, size_t index, void *elem) {
 			self->data[i] = self->data[i - 1];
 		}
 		self->data[index] = elem;
+		self->size++;
 	}
 }
 

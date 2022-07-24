@@ -14,7 +14,9 @@ void init_context(context_t *self) {
 void deinit_context(context_t *self) {
 	size_t size = vector_size(self->vec_enemies);
 	for (size_t i = 0; i < size; i++) {
-		free(vector_at(self->vec_enemies, i));
+		void *elem = vector_at(self->vec_enemies, i);
+		LOG_VA("deleting elem: %lx\n", (size_t) elem);
+		free(elem);
 	}
 	dealloc_deinit_vector(self->vec_enemies);
 }
