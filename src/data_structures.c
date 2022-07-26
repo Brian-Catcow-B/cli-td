@@ -16,7 +16,6 @@ vector_t *alloc_init_vector() {
 	new_vec->size = 0;
 	new_vec->allocated_size = BASE_VECTOR_ALLOCATED_SIZE;
 
-	LOG_VA("new_vec pointer: %lx\n", (size_t) new_vec);
 	return new_vec;
 }
 
@@ -25,29 +24,28 @@ void dealloc_deinit_vector(vector_t *self) {
 	free(self);
 }
 
-void vector_push_back(vector_t *self, void *elem) {
-	LOG_VA("vector_push_back: %lx\n", (size_t) elem);
-	if (self->size == self->allocated_size) {
-		LOG_VA("calling realloc; self->size == self->allocated_size == %lu\n", self->size);
-		LOG_VA("realloc(self->data, %lu);\n", sizeof(void *) * (self->allocated_size + BASE_VECTOR_ALLOCATED_SIZE));
-		self->data = realloc(self->data, sizeof(void *) * (self->allocated_size + BASE_VECTOR_ALLOCATED_SIZE));
-	}
+void vector_increase_alloc_size(vector_t *self) {
+	self->data = realloc(self->data, sizeof(void *) * (self->allocated_size + BASE_VECTOR_ALLOCATED_SIZE));
+	self->allocated_size += BASE_VECTOR_ALLOCATED_SIZE;
+}
 
+void vector_push_back(vector_t *self, void *elem) {
+	if (self->size == self->allocated_size) {
+		vector_increase_alloc_size(self);
+	}
 	self->data[self->size] = elem;
 	self->size++;
 }
 
 void vector_insert_index(vector_t *self, size_t index, void *elem) {
-	if (self->size == 0) {
-		vector_push_back(self, elem);
-	} else {
-		vector_push_back(self, self->data[self->size - 1]);
-		for (size_t i = self->size - 1; i > index; i--) {
-			self->data[i] = self->data[i - 1];
-		}
-		self->data[index] = elem;
-		self->size++;
+	if (self->size == self->allocated_size) {
+		vector_increase_alloc_size(self);
 	}
+	for (size_t i = self->size; i > index; i--) {
+		self->data[i] = self->data[i - 1];
+	}
+	self->data[index] = elem;
+	self->size++;
 }
 
 size_t vector_size(vector_t *self) {
@@ -60,6 +58,7 @@ void *vector_remove_index(vector_t *self, size_t index) {
 	for (size_t i = index; i + 1 < self->size; i++) {
 		self->data[i] = self->data[i + 1];
 	}
+	self->size--;
 
 	return retval;
 }

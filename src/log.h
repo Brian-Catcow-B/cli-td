@@ -8,12 +8,8 @@ FILE *__file_handle;
 
 void open_log_file();
 void close_log_file();
-#define LOG(str) \
-	fprintf(__file_handle, str); \
-	close_log_file(); \
-	open_log_file()
-#define LOG_VA(str, ...) \
-	fprintf(__file_handle, str, __VA_ARGS__); \
+#define LOG(...) \
+	fprintf(__file_handle, __VA_ARGS__); \
 	close_log_file(); \
 	open_log_file()
 

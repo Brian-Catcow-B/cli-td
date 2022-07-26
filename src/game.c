@@ -15,7 +15,6 @@ void deinit_context(context_t *self) {
 	size_t size = vector_size(self->vec_enemies);
 	for (size_t i = 0; i < size; i++) {
 		void *elem = vector_at(self->vec_enemies, i);
-		//LOG_VA("deleting elem: %lx\n", (size_t) elem);
 		free(elem);
 	}
 	dealloc_deinit_vector(self->vec_enemies);
@@ -39,7 +38,6 @@ bool handle_key_press(context_t *c, int ch) {
 		case 's': {
 			enemy_t *new_enemy = alloc_init_enemy(e_enemy_type_a, &(c->board));
 			enemy_set_pos(new_enemy, c->board.enemy_start_pos);
-			LOG_VA("pushing back; c->vec_enemies: %lu; new_enemy: %lu\n", c->vec_enemies, new_enemy);
 			vector_push_back(c->vec_enemies, new_enemy);
 			break;
 		}
