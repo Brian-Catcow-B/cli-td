@@ -1,6 +1,7 @@
 #include "board.h"
 #include <stdlib.h>
 #include <ncurses.h>
+#include "enemy.h"
 
 char arrow_from_path_direction(e_path_direction direction) {
 	switch (direction) {
@@ -35,7 +36,14 @@ char tile_char(tile_t *self) {
 		case e_tile_type_vacant:
 			return '.';
 		case e_tile_type_path:
-			return arrow_from_path_direction(self->path_direction);
+			if (self->enemy_on == NULL)
+			{
+				return arrow_from_path_direction(self->path_direction);
+			}
+			else
+			{
+				return self->enemy_on->letter;
+			}
 		case e_tile_type_tower:
 			return 'T';
 		default:
