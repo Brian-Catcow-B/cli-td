@@ -9,6 +9,6 @@ FILE *__file_handle;
 void open_log_file();
 void close_log_file();
 #define LOG(...) \
-	fprintf(__file_handle, __VA_ARGS__);
+	fprintf(__file_handle, __VA_ARGS__)
 
 #endif // LOG_H

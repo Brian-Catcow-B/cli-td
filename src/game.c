@@ -10,6 +10,7 @@
 void init_context(context_t *self) {
 	init_board(&(self->board));
 	generate_path(&(self->board));
+	generate_border(&(self->board));
 	self->vec_enemies = alloc_init_vector();
 }
 
