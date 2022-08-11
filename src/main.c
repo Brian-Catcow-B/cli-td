@@ -15,17 +15,6 @@ int main(int argc, char **argv) {
 	LOG("===\nPROGRAM START\n===\n");
 	init_ncurses();
 
-	//printw("Hello World !!!");
-	//refresh();
-	//int ch = getch();
-	
-	//printw("key pressed is ");
-	//attron(A_BOLD);
-	//printw("%c", ch);
-	//attroff(A_BOLD);
-
-	//getch();
-	
 	game_loop();
 
 	deinit_ncurses();
