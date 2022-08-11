@@ -1,6 +1,7 @@
 #include "enemy.h"
 #include <stdlib.h>
 #include "log.h"
+#include "board.h"
 
 static const int lut_enemy_hps[] = {
 	10,
@@ -43,7 +44,7 @@ void deinit_enemy(enemy_t *self) {
 
 }
 
-void enemy_set_pos(enemy_t *self, board_position_t new_pos) {
+void enemy_set_pos(enemy_t *self, pos2d_t new_pos) {
 	if (self->pos.x >= 0 && self->pos.x < BOARD_WIDTH && self->pos.y >= 0 && self->pos.y < BOARD_HEIGHT) {
 		tile_t *current_tile = &(self->board->tiles[self->pos.y][self->pos.x]);
 		current_tile->enemy_on = NULL;
@@ -67,7 +68,7 @@ void enemy_update(enemy_t *self) {
 
 	self->frames_until_update = lut_enemy_update_frames[self->type];
 	tile_t *current_tile = &(self->board->tiles[self->pos.y][self->pos.x]);
-	board_position_t next_pos = self->pos;
+	pos2d_t next_pos = self->pos;
 	switch (current_tile->path_direction) {
 		case e_path_direction_left:
 			next_pos.x--;

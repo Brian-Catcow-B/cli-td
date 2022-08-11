@@ -2,32 +2,18 @@
 #define BOARD_H
 
 #include <stddef.h>
+#include "pos2d.h"
+#include "dims.h"
 
-#define WINDOW_WIDTH 80
-#define WINDOW_HEIGHT 30
+typedef enum e_board_path_direction {
+	e_board_path_direction_none,
+	e_board_path_direction_left,
+	e_board_path_direction_right,
+	e_board_path_direction_up,
+	e_board_path_direction_down,
+} e_board_path_direction;
 
-#define BOARD_BORDER_L 1
-#define BOARD_BORDER_R 1
-#define BOARD_BORDER_U 1
-#define BOARD_BORDER_D 1
-
-#define BOARD_WIDTH (WINDOW_WIDTH - BOARD_BORDER_L - BOARD_BORDER_R)
-#define BOARD_HEIGHT (WINDOW_HEIGHT - BOARD_BORDER_U - BOARD_BORDER_D)
-
-typedef struct board_position_t {
-	int y;
-	int x;
-} board_position_t;
-
-typedef enum e_path_direction {
-	e_path_direction_none,
-	e_path_direction_left,
-	e_path_direction_right,
-	e_path_direction_up,
-	e_path_direction_down,
-} e_path_direction;
-
-char arrow_from_path_direction(e_path_direction direction);
+char arrow_from_path_direction(e_board_path_direction direction);
 
 typedef enum e_border_direction {
 	e_border_direction_none,
@@ -38,34 +24,36 @@ typedef enum e_border_direction {
 
 char line_from_border_direction(e_border_direction direction);
 
-typedef enum e_tile_type {
-	e_tile_type_vacant,
-	e_tile_type_path,
-	e_tile_type_tower,
-	e_tile_type_border,
-} e_tile_type;
+typedef enum e_board_tile_type {
+	e_board_tile_type_vacant,
+	e_board_tile_type_path,
+	e_board_tile_type_tower,
+	e_board_tile_type_border,
+} e_board_tile_type;
 
-typedef struct tile_t {
-	e_tile_type type;
-	e_path_direction path_direction;
+typedef struct board_tile_t {
+	struct board_t *board;
+	e_board_tile_type type;
+	e_board_path_direction path_direction;
 	e_border_direction border_direction;
 	struct enemy_t *enemy_on;
 	size_t y;
 	size_t x;
-} tile_t;
+} board_tile_t;
 
-void init_tile(tile_t *self, board_position_t bp);
-void deinit_tile(tile_t *self);
-char tile_char(tile_t *self);
-void tile_update(tile_t *self);
-void tile_set_path(tile_t *self, e_path_direction direction);
-void tile_set_path_and_update(tile_t *self, e_path_direction direction);
-void tile_set_border(tile_t *self, e_border_direction direction);
-void tile_set_border_and_update(tile_t *self, e_border_direction direction);
+void init_tile(board_tile_t *self, pos2d_t bp);
+void deinit_tile(board_tile_t *self);
+char board_tile_char(board_tile_t *self);
+void board_tile_update(board_tile_t *self);
+void board_tile_set_path(board_tile_t *self, e_board_path_direction direction);
+void board_tile_set_path_and_update(board_tile_t *self, e_board_path_direction direction);
+void board_tile_set_border(board_tile_t *self, e_border_direction direction);
+void board_tile_set_border_and_update(board_tile_t *self, e_border_direction direction);
 
 typedef struct board_t {
-	tile_t tiles[WINDOW_HEIGHT][WINDOW_WIDTH];
-	board_position_t enemy_start_pos;
+	board_tile_t tiles[BOARD_HEIGHT][BOARD_WIDTH];
+	pos2d_t enemy_start_pos;
+	pos2d_t origin_offset;
 } board_t;
 
 void init_board(board_t *self);

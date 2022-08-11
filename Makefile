@@ -7,7 +7,7 @@ SRC = src
 OBJ = objects
 BIN = bin
 
-OBJ_FILES = $(OBJ)/game.o $(OBJ)/board.o $(OBJ)/enemy.o $(OBJ)/data_structures.o $(OBJ)/log.o
+OBJ_FILES = $(OBJ)/game.o $(OBJ)/board.o $(OBJ)/enemy.o $(OBJ)/data_structures.o $(OBJ)/log.o $(OBJ)/window.o
 LIBS = -lncurses
 
 all: mkdirs $(PROJECT)
