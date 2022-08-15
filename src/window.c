@@ -14,6 +14,7 @@ void window_tile_set_border(window_tile_t *self, e_border_direction direction);
 
 void init_window(window_t *self) {
 	init_board(&(self->board), pos2d(BOARD_BORDER_U, BOARD_BORDER_L));
+	board_generate_path(&(self->board));
 	for (size_t y = 0; y < WINDOW_HEIGHT; y++) {
 		for (size_t x = 0; x < WINDOW_WIDTH; x++) {
 			init_window_tile(&(self->tiles[y][x]), pos2d(y, x));

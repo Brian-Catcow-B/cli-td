@@ -46,7 +46,8 @@ typedef struct board_t {
 
 void init_board(board_t *self, pos2d_t oo);
 void deinit_board(board_t *self);
-void generate_path(board_t *self);
+void board_generate_path(board_t *self);
+void board_update_all(board_t *self);
 
 #endif // BOARD_H
 

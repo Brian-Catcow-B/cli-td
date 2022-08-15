@@ -31,7 +31,6 @@ void init_board_tile(board_tile_t *self, pos2d_t bp, board_t *board) {
 	self->x = bp.x;
 	self->y = bp.y;
 	self->board = board;
-	board_tile_update(self);
 }
 
 void deinit_board_tile(board_tile_t *self) {
@@ -77,12 +76,9 @@ void board_tile_update(board_tile_t *self) {
 // ======================================================
 
 void init_board(board_t *self, pos2d_t oo) {
-	pos2d_t bp;
 	for (size_t x = 0; x < BOARD_WIDTH; x++) {
 		for (size_t y = 0; y < BOARD_HEIGHT; y++) {
-			bp.y = y;
-			bp.x = x;
-			init_board_tile(&(self->tiles[y][x]), bp, self);
+			init_board_tile(&(self->tiles[y][x]), pos2d(y, x), self);
 		}
 	}
 	self->enemy_start_pos.y = -1;
@@ -99,7 +95,7 @@ void deinit_board(board_t *self) {
 	}
 }
 
-void generate_path(board_t *self) {
+void board_generate_path(board_t *self) {
 	self->enemy_start_pos.y = 0;
 	self->enemy_start_pos.x = 2;
 	for (size_t y = 0; y < BOARD_HEIGHT - 3; y++) {
@@ -113,5 +109,11 @@ void generate_path(board_t *self) {
 	for (size_t y = 0; y < BOARD_HEIGHT - 2; y++) {
 		board_tile_set_path_and_update(&(self->tiles[y][BOARD_WIDTH - 3]), e_board_path_direction_up);
 	}
+}
+
+void board_update_all(board_t *self) {
+	for (size_t y = 0; y < BOARD_HEIGHT; y++)
+		for (size_t x = 0; x < BOARD_WIDTH; x++)
+			board_tile_update(&(self->tiles[y][x]));
 }
 
