@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -Wextra -g
 
 PROJECT = cliTD
 
@@ -7,7 +7,7 @@ SRC = src
 OBJ = objects
 BIN = bin
 
-OBJ_FILES = $(OBJ)/game.o $(OBJ)/board.o $(OBJ)/enemy.o $(OBJ)/data_structures.o $(OBJ)/log.o $(OBJ)/window.o
+OBJ_FILES = $(OBJ)/game.o $(OBJ)/board.o $(OBJ)/enemy.o $(OBJ)/data_structures.o $(OBJ)/log.o $(OBJ)/window.o $(OBJ)/pos2d.o
 LIBS = -lncurses
 
 all: mkdirs $(PROJECT)

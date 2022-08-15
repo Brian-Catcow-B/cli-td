@@ -6,5 +6,7 @@ typedef struct pos2d_t {
 	int x;
 } pos2d_t;
 
+pos2d_t pos2d(int y, int x);
+
 #endif // POS2D_H
 

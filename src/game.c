@@ -8,9 +8,7 @@
 #define FPS 60
 
 void init_context(context_t *self) {
-	init_board(&(self->board));
-	generate_path(&(self->board));
-	generate_border(&(self->board));
+	init_window(&(self->window));
 	self->vec_enemies = alloc_init_vector();
 }
 
@@ -52,14 +50,14 @@ bool handle_key_press(context_t *c, int ch) {
 		case 'q':
 			return true;
 		case 'a': {
-			enemy_t *new_enemy = alloc_init_enemy(e_enemy_type_a, &(c->board));
-			enemy_set_pos(new_enemy, c->board.enemy_start_pos);
+			enemy_t *new_enemy = alloc_init_enemy(e_enemy_type_a, &(c->window.board));
+			enemy_set_pos(new_enemy, c->window.board.enemy_start_pos);
 			vector_push_back(c->vec_enemies, new_enemy);
 			break;
 		}
 		case 'b': {
-			enemy_t *new_enemy = alloc_init_enemy(e_enemy_type_b, &(c->board));
-			enemy_set_pos(new_enemy, c->board.enemy_start_pos);
+			enemy_t *new_enemy = alloc_init_enemy(e_enemy_type_b, &(c->window.board));
+			enemy_set_pos(new_enemy, c->window.board.enemy_start_pos);
 			vector_push_back(c->vec_enemies, new_enemy);
 			break;
 		}

@@ -1,10 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "board.h"
+#include "window.h"
 
 typedef struct context_t {
-	board_t board;
+	window_t window;
 	struct vector_t *vec_enemies;
 } context_t;
 

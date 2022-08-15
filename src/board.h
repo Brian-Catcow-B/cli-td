@@ -15,15 +15,6 @@ typedef enum e_board_path_direction {
 
 char arrow_from_path_direction(e_board_path_direction direction);
 
-typedef enum e_border_direction {
-	e_border_direction_none,
-	e_border_direction_horizontal,
-	e_border_direction_vertical,
-	e_border_direction_multi,
-} e_border_direction;
-
-char line_from_border_direction(e_border_direction direction);
-
 typedef enum e_board_tile_type {
 	e_board_tile_type_vacant,
 	e_board_tile_type_path,
@@ -35,7 +26,6 @@ typedef struct board_tile_t {
 	struct board_t *board;
 	e_board_tile_type type;
 	e_board_path_direction path_direction;
-	e_border_direction border_direction;
 	struct enemy_t *enemy_on;
 	size_t y;
 	size_t x;
@@ -47,8 +37,6 @@ char board_tile_char(board_tile_t *self);
 void board_tile_update(board_tile_t *self);
 void board_tile_set_path(board_tile_t *self, e_board_path_direction direction);
 void board_tile_set_path_and_update(board_tile_t *self, e_board_path_direction direction);
-void board_tile_set_border(board_tile_t *self, e_border_direction direction);
-void board_tile_set_border_and_update(board_tile_t *self, e_border_direction direction);
 
 typedef struct board_t {
 	board_tile_t tiles[BOARD_HEIGHT][BOARD_WIDTH];
@@ -56,10 +44,9 @@ typedef struct board_t {
 	pos2d_t origin_offset;
 } board_t;
 
-void init_board(board_t *self);
+void init_board(board_t *self, pos2d_t oo);
 void deinit_board(board_t *self);
 void generate_path(board_t *self);
-void generate_border(board_t *self);
 
 #endif // BOARD_H
 

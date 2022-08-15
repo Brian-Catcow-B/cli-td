@@ -18,13 +18,13 @@ static const int lut_enemy_update_frames[] = {
 	35,
 };
 
-enemy_t *alloc_init_enemy(e_enemy_type type, board_t *board) {
+enemy_t *alloc_init_enemy(e_enemy_type type, struct board_t *board) {
 	enemy_t *retval = malloc(sizeof(enemy_t));
 	init_enemy(retval, type, board);
 	return retval;
 }
 
-void init_enemy(enemy_t *self, e_enemy_type type, board_t *board) {
+void init_enemy(enemy_t *self, e_enemy_type type, struct board_t *board) {
 	self->type = type;
 	self->board = board;
 	self->frames_until_update = lut_enemy_update_frames[type];
@@ -46,17 +46,17 @@ void deinit_enemy(enemy_t *self) {
 
 void enemy_set_pos(enemy_t *self, pos2d_t new_pos) {
 	if (self->pos.x >= 0 && self->pos.x < BOARD_WIDTH && self->pos.y >= 0 && self->pos.y < BOARD_HEIGHT) {
-		tile_t *current_tile = &(self->board->tiles[self->pos.y][self->pos.x]);
+		board_tile_t *current_tile = &(self->board->tiles[self->pos.y][self->pos.x]);
 		current_tile->enemy_on = NULL;
-		tile_update(current_tile);
+		board_tile_update(current_tile);
 	}
 
 	self->pos = new_pos;
 
 	if (self->pos.x >+ 0 && self->pos.x < BOARD_WIDTH && self->pos.y >= 0 && self->pos.y < BOARD_HEIGHT) {
-		tile_t *new_tile = &(self->board->tiles[self->pos.y][self->pos.x]);
+		board_tile_t *new_tile = &(self->board->tiles[self->pos.y][self->pos.x]);
 		new_tile->enemy_on = self;
-		tile_update(new_tile);
+		board_tile_update(new_tile);
 	}
 }
 
@@ -67,19 +67,19 @@ void enemy_update(enemy_t *self) {
 	}
 
 	self->frames_until_update = lut_enemy_update_frames[self->type];
-	tile_t *current_tile = &(self->board->tiles[self->pos.y][self->pos.x]);
+	board_tile_t *current_tile = &(self->board->tiles[self->pos.y][self->pos.x]);
 	pos2d_t next_pos = self->pos;
 	switch (current_tile->path_direction) {
-		case e_path_direction_left:
+		case e_board_path_direction_left:
 			next_pos.x--;
 			break;
-		case e_path_direction_right:
+		case e_board_path_direction_right:
 			next_pos.x++;
 			break;
-		case e_path_direction_up:
+		case e_board_path_direction_up:
 			next_pos.y--;
 			break;
-		case e_path_direction_down:
+		case e_board_path_direction_down:
 			next_pos.y++;
 			break;
 		default:

@@ -10,7 +10,7 @@
 void init_ncurses();
 void deinit_ncurses();
 
-int main(int argc, char **argv) {
+int main() {
 	open_log_file();
 	LOG("===\nPROGRAM START\n===\n");
 	init_ncurses();
