@@ -9,7 +9,7 @@ typedef enum e_tower_type {
 	e_tower_type_cat,
 } e_tower_type;
 
-char center_char_from_tower_type(e_tower_type type);
+char center_char_from_tower_type(e_tower_type type, int level);
 
 typedef struct tower_t {
 	e_tower_type type;

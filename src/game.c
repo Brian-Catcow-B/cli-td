@@ -1,6 +1,8 @@
 #include "game.h"
-#include <ncurses.h>
+
 #include <stdlib.h>
+#include <ncurses.h>
+
 #include "data_structures.h"
 #include "enemy.h"
 #include "log.h"

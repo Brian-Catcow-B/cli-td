@@ -1,5 +1,7 @@
 #include "pos2d.h"
 
+#include <stdlib.h>
+
 pos2d_t pos2d(int y, int x) {
 	pos2d_t p;
 	p.y = y;
@@ -21,6 +23,8 @@ char linechar_from_relative_pos(e_relative_pos relative_pos) {
 		case e_relative_pos_DL:
 		case e_relative_pos_UR:
 			return '/';
+		case e_relative_pos_equal:
+			return '.';
 		default:
 			return '?';
 	}

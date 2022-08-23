@@ -11,6 +11,7 @@ typedef struct pos2d_t {
 pos2d_t pos2d(int y, int x);
 
 typedef enum e_relative_pos {
+	e_relative_pos_equal,
 	e_relative_pos_U,
 	e_relative_pos_UR,
 	e_relative_pos_R,
@@ -30,7 +31,7 @@ typedef struct pos2d_vec_t {
 } pos2d_vec_t;
 
 void init_pos2d_vec(pos2d_vec_t *self, size_t initial_allocated_size);
-void pos2d_vec_push_back(pos2d_vec_t *self, pos2d_t pos) {
+void pos2d_vec_push_back(pos2d_vec_t *self, pos2d_t pos);
 void deinit_pos2d_vec(pos2d_vec_t *self);
 
 #endif // POS2D_H
