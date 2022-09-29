@@ -2,8 +2,11 @@
 #define BOARD_H
 
 #include <stddef.h>
+#include <stdbool.h>
 #include "pos2d.h"
 #include "dims.h"
+
+struct tower_t;
 
 typedef enum e_board_path_direction {
 	e_board_path_direction_none,
@@ -29,6 +32,7 @@ typedef struct board_tile_t {
 	struct enemy_t *enemy_on;
 	size_t y;
 	size_t x;
+	char custom_char;
 } board_tile_t;
 
 void init_tile(board_tile_t *self, pos2d_t bp);
@@ -48,6 +52,8 @@ void init_board(board_t *self, pos2d_t oo);
 void deinit_board(board_t *self);
 void board_generate_path(board_t *self);
 void board_update_all(board_t *self);
+bool board_is_area_valid_tower_placement(board_t *self, pos2d_t top_left, int height, int width);
+bool board_place_tower(board_t *self, struct tower_t *tower);
 
 #endif // BOARD_H
 

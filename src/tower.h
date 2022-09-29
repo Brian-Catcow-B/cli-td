@@ -14,14 +14,18 @@ char center_char_from_tower_type(e_tower_type type, int level);
 typedef struct tower_t {
 	e_tower_type type;
 	int level;
+	int height;
+	int width;
+	char **chars;
 	struct board_t *board;
-	pos2d_t pos;
+	pos2d_t origin;
+	pos2d_t center;
 	pos2d_vec_t ordered_path_tiles_in_range;
 	int frames_until_shot;
 	struct enemy_t *target;
 } tower_t;
 
-void init_tower(tower_t *self, struct board_t *board, pos2d_t pos, e_tower_type type);
+void init_tower(tower_t *self, struct board_t *board, pos2d_t origin, e_tower_type type);
 void deinit_tower(tower_t *self);
 
 #endif // TOWER_H

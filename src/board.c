@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include "enemy.h"
+#include "tower.h"
 
 #include "log.h"
 
@@ -31,6 +32,7 @@ void init_board_tile(board_tile_t *self, pos2d_t bp, board_t *board) {
 	self->x = bp.x;
 	self->y = bp.y;
 	self->board = board;
+	self->custom_char = '?';
 }
 
 void deinit_board_tile(board_tile_t *self) {
@@ -51,7 +53,7 @@ char board_tile_char(board_tile_t *self) {
 				return self->enemy_on->letter;
 			}
 		case e_board_tile_type_tower:
-			return 'T';
+			return self->custom_char;
 		default:
 			return '!';
 	}
@@ -117,3 +119,32 @@ void board_update_all(board_t *self) {
 			board_tile_update(&(self->tiles[y][x]));
 }
 
+bool board_is_area_valid_tower_placement(board_t *self, pos2d_t top_left, int height, int width) {
+	for (int y = top_left.y; y < top_left.y + height; y++) {
+		for (int x = top_left.x; x < top_left.x + width; x++) {
+			switch (self->tiles[y][x].type) {
+				case e_board_tile_type_vacant:
+					break;
+				default:
+					return false;
+			}
+		}
+	}
+	return true;
+}
+
+bool board_place_tower(board_t *self, struct tower_t *tower) {
+	if (!board_is_area_valid_tower_placement(self, tower->origin, tower->height, tower->width))
+		return false;
+	
+	board_tile_t *tile;
+	for (int yoff = 0; yoff < tower->height; yoff++) {
+		for (int xoff = 0; xoff < tower->height; xoff++) {
+			tile = &(self->tiles[yoff + tower->origin.y][xoff + tower->origin.x]);
+			tile->type = e_board_tile_type_tower;
+			tile->custom_char = tower->chars[yoff][xoff];
+		}
+	}
+
+	return true;
+}
